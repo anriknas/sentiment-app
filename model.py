@@ -18,12 +18,12 @@ saved_model = ['https://github.com/sankirnajoshi/sentiment-app/raw/master/model/
               'https://github.com/sankirnajoshi/sentiment-app/raw/master/model/tokenizer.pickle'
               ]
 
-if not path.exists('../data'):
-    os.makedirs('../data')
+if not path.exists('./model'):
+    os.makedirs('./model')
 
-download_url(saved_model[0],'../data/model.h5')
-download_url(saved_model[1],'../data/model.json')
-download_url(saved_model[2],'../data/tokenizer.pickle')
+download_url(saved_model[0],'./model/model.h5')
+download_url(saved_model[1],'./model/model.json')
+download_url(saved_model[2],'./model/tokenizer.pickle')
 
 import tensorflow as tf
 from tensorflow import keras
@@ -67,6 +67,7 @@ while True:
     user_input = input("Please enter your text below:\n")
     if user_input == "":       
         print("Thank you.")
+        break
     response = predict_response(response=[user_input])
     print(f'\nPredicted Sentiments are:\n{response}\n')
 
