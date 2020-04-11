@@ -19,11 +19,14 @@ saved_model = ['https://github.com/sankirnajoshi/sentiment-app/raw/master/model/
               ]
 
 if not path.exists('./model'):
-    os.makedirs('./model')
+    os.makedirs('./model') 
 
-download_url(saved_model[0],'./model/model.h5')
-download_url(saved_model[1],'./model/model.json')
-download_url(saved_model[2],'./model/tokenizer.pickle')
+if not path.exists('.model/model.h5'):
+    download_url(saved_model[0],'./model/model.h5')
+if not path.exists('./model/model.json'):
+    download_url(saved_model[1],'./model/model.json')
+if not path.exists('./model/tokenizer.pickle'):
+    download_url(saved_model[2],'./model/tokenizer.pickle')
 
 import tensorflow as tf
 from tensorflow import keras
