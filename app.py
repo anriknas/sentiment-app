@@ -2,8 +2,9 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
+from dash.dependencies import Input, Output, State
+import model
 
-df = pd.read_csv('https://gist.githubusercontent.com/chriddyp/5d1ea79569ed194d432e56108a04d188/raw/a9f9e8076b837d541398e999dcbac2b2826a81f8/gdp-life-exp-2007.csv')
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -30,10 +31,25 @@ app.layout = html.Div([
         id="input-id",
         type="text",
         placeholder="Enter your text",
-    )    
-
+        value ="Wow"
+    ),
+    html.Div(id='my-sent'),
+    html.Div(id='my-conf'),
+    html.Div(id='my-tag')
 ]
 )
+
+
+@app.callback(
+    [Output(component_id='my-sent', component_property='children'),
+    Output(component_id='my-conf', component_property='children'),
+    Output(component_id='my-tag', component_property='children')
+    ],
+    [Input(component_id='input-id', component_property='value')]
+)
+def update_output_div(input_value):
+    tag, tag_prob, sent_prob = model.predict_response([input_value])
+    return tag, tag_prob, sent_prob
 
 
 if __name__ == "__main__":

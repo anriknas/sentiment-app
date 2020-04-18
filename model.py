@@ -1,5 +1,5 @@
-print("\nLoading the app....")
-print("Please wait....\n")
+#print("\nLoading the app....")
+#print("Please wait....\n")
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
@@ -36,42 +36,56 @@ from tensorflow.keras.preprocessing import sequence
 import numpy as np
 import pickle
 
-with open('../data/tokenizer.pickle', 'rb') as handle:
+with open('./model/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 # load json and create model
-json_file = open('../data/model.json', 'r')
+json_file = open('./model/model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 
 model = model_from_json(loaded_model_json)
 # load weights into new model
-model.load_weights("../data/model.h5")
+model.load_weights("./model/model.h5")
 
 def predict_response(response):
     response = tokenizer.texts_to_sequences(response)
     response = sequence.pad_sequences(response, maxlen=48)
-    pred = np.argmax(model.predict(response))
+    probs = np.around(model.predict(response),decimals=2)
+    pred = np.argmax(probs)
+    print(probs)
+    print(pred)
     if pred == 0:
-        return 'Very Negative'
+        tag = 'Very Negative'
+        tag_prob = probs[0,0]
+        sent_prob = np.sum(probs[0,:2])
     elif pred == 1:
-        return 'Somewhat Negative'
+        tag = 'Negative'
+        tag_prob = probs[0,1]
+        sent_prob = np.sum(probs[0,:2])
     elif pred == 2:
-        return 'Nuetral'
+        tag = 'Neutral'
+        tag_prob = probs[0,2]
+        sent_prob = probs[0,2]        
     elif pred == 3:
-        return 'Somewhat Positive'
+        tag = 'Positive'
+        tag_prob = probs[0,3]
+        sent_prob = np.sum(probs[0,3:])
     elif pred == 4:
-        return 'Very Positive'
-
-print("Loading Complete...\n\n\n\n")
-print("SENTIMENT ANALYSIS APPLICATION\n")
-
-while True:             
-    user_input = input("Please enter your text below:\n")
-    if user_input == "":       
-        print("Thank you.")
-        break
-    response = predict_response(response=[user_input])
-    print(f'\nPredicted Sentiments are:\n{response}\n')
+        tag = 'Very Positive'
+        tag_prob = probs[0,4]
+        sent_prob = np.sum(probs[0,3:])
+    return tag, tag_prob, sent_prob
 
 
+## Below part for unit test
+
+#while True:             
+#    user_input = input("Please enter your text below:\n")
+#    if user_input == "":       
+#        print("Thank you.")
+#        break
+#    sent, conf, tag = predict_response(response=[user_input])
+#    print(f'Predicted tag : {tag}')
+#    print(f'Tag probability :{conf*100:.1f}%')
+#    print(f'Sentiment Confidence:{sent*100:.1f}%')    
