@@ -1,5 +1,9 @@
 # Sentiment Analysis App
 
+## Demo
+
+![](assets/demo.gif)
+
 ## About this app
 
 This is a [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) model, deployed to a [dash](https://plotly.com/dash/) webapp.    
@@ -35,10 +39,6 @@ Run the app:
 python app.py
 ```
 Open a browser at http://127.0.0.1:8050
-
-## Demo
-
-![](assets/demo.gif)
 
 ## Resources
 
