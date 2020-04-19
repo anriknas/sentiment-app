@@ -53,8 +53,8 @@ def predict_response(response):
     response = sequence.pad_sequences(response, maxlen=48)
     probs = np.around(model.predict(response),decimals=2)
     pred = np.argmax(probs)
-    print(probs)
-    print(pred)
+    #print(probs)
+    #print(pred)
     if pred == 0:
         tag = 'Very Negative'
         tag_prob = probs[0,0]
