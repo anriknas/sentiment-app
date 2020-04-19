@@ -1,17 +1,49 @@
-# sentiment-app
+# Sentiment Analysis App
 
-We will develop a [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) model and deploy it to a [dash](https://plotly.com/dash/) webapp.    
+## About this app
 
-The dataset is available at the [Stanford NLP website](https://nlp.stanford.edu/sentiment/code.html)
+This is a [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) model, deployed to a [dash](https://plotly.com/dash/) webapp.    
+Users can input the text in the text box and get the sentiment of the text classified.
 
-The objetive of this project is to take user-input and identify its sentiment. 
+- **Sentiments**: `Negative`, `Neutral`, `Positive`    
 
-Sentiment values ranges : very negative, negative, neutral, positive, very positive.
+- **Tags**: `Very Negative`, `Negative`, `Neutral`, `Positive`, `Very Positive`    
 
+## How to run this app
 
-Model trained on Google Colab here: https://colab.research.google.com/drive/1R8C37FCryBpRRmRn_k5Jn0DSHAULLRAi
+(The following instructions apply to Posix/bash. Windows users should check
+[here](https://docs.python.org/3/library/venv.html).)
 
-Run `python model.py` to load the saved model and make predictions on user input.    
+First, clone this repository and open a terminal inside the root folder.
 
+Create and activate a new virtual environment (recommended) by running
+the following:
 
-### this is a work in progress
+```bash
+python3 -m venv myvenv
+source myvenv/bin/activate
+```
+
+Install the requirements:
+
+```bash
+pip install -r requirements.txt
+```
+Run the app:
+
+```bash
+python app.py
+```
+Open a browser at http://127.0.0.1:8050
+
+## Demo
+
+![](assets/demo.gif)
+
+## Resources
+
+The dataset is available at the [Stanford NLP website](https://nlp.stanford.edu/sentiment/code.html)    
+Model trained on Google Colab here: https://colab.research.google.com/drive/1R8C37FCryBpRRmRn_k5Jn0DSHAULLRAi    
+The model's saved weights and json is available in the `model` folder.
+
+----
